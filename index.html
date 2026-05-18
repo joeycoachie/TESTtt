@@ -2,134 +2,239 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>M.O.E. | DMO Operator Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.O.E. Vercel Hub | Ascension Logic</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #000000; color: #ffffff; touch-action: manipulation; }
-        .progress-bar-fill { transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        /* Prevent text selection on rapid tapping */
-        button { user-select: none; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #0a0a0a;
+            color: #f3f4f6;
+        }
+        .brutalist-btn {
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 4px 4px 0px 0px #000;
+        }
+        .brutalist-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px 0px #000;
+        }
+        .progress-transition {
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .neon-green { color: #39ff14; }
+        .bg-neon-green { background-color: #39ff14; }
+        .toast {
+            visibility: hidden; min-width: 250px; background-color: #333; color: #fff;
+            text-align: center; border-radius: 2px; padding: 16px; position: fixed;
+            z-index: 50; left: 50%; bottom: 30px; font-size: 17px; transform: translateX(-50%);
+        }
+        .toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="antialiased h-screen flex flex-col p-4 md:p-8">
 
-    <header class="w-full bg-gray-900 border-b border-gray-800 py-4 px-6 flex justify-between items-center sticky top-0 z-10">
+    <header class="w-full border-b-2 border-gray-800 pb-4 mb-6 flex justify-between items-end">
         <div>
-            <div class="font-black tracking-tighter text-xl text-white">M.O.E. <span class="text-gray-500 font-normal">DMO</span></div>
-            <div class="text-[10px] uppercase tracking-widest text-green-500 font-bold flex items-center mt-1">
-                <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span> SYSTEM LIVE: KL CITY CENTRE
-            </div>
+            <h1 class="text-4xl font-bold tracking-tighter uppercase">M.O.E. <span class="text-gray-600">Terminal</span></h1>
+            <p class="text-xs uppercase tracking-widest text-gray-500 mt-1">Live Integration: Gates 1, 2, & 3 | User: The Architect</p>
         </div>
-        <div class="text-right">
-            <div class="text-[10px] text-gray-500 uppercase tracking-widest">Operator</div>
-            <div class="font-bold text-sm">JOEY_TAN</div>
+        <div class="text-right hidden sm:block">
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Network Status</p>
+            <p class="text-sm font-bold neon-green uppercase flex items-center justify-end gap-2">
+                <span class="w-2 h-2 bg-neon-green rounded-full animate-pulse"></span> Encrypted & Live
+            </p>
         </div>
     </header>
 
-    <main class="flex-grow p-4 flex flex-col gap-6">
-
-        <section class="bg-gray-900 border border-gray-800 rounded-xl p-5 shadow-2xl">
-            <div class="flex justify-between items-end mb-2">
-                <h2 class="text-xs uppercase tracking-widest text-gray-400 font-bold">Volume Progression</h2>
-                <span class="text-xl font-black text-white" id="vp-text">1,500 <span class="text-sm text-gray-500 font-normal">/ 2,000 VP</span></span>
-            </div>
-            
-            <div class="w-full h-4 bg-gray-800 rounded-full overflow-hidden mb-3">
-                <div id="vp-bar" class="h-full bg-blue-600 progress-bar-fill" style="width: 75%;"></div>
-            </div>
-
-            <div class="w-full bg-black border border-gray-800 rounded-lg p-3 flex items-center justify-between opacity-70">
-                <div class="flex items-center gap-3">
-                    <span class="text-lg">🔒</span>
-                    <div>
-                        <div class="text-xs font-bold text-gray-300">MASTER OPERATING SYSTEM</div>
-                        <div class="text-[10px] text-gray-500 uppercase">Requires Active Supervisor Status</div>
-                    </div>
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8 flex-grow">
+        
+        <section class="bg-gray-900 border-2 border-gray-700 p-6 flex flex-col justify-between">
+            <div>
+                <h2 class="text-xl font-bold uppercase mb-1 border-b border-gray-700 pb-2">Gate 1: Liquid Trust</h2>
+                <p class="text-xs text-gray-400 mb-6">100:10:5:1 Lead Velocity Tracker. 1-Tap Field Inputs.</p>
+                
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <button onclick="logIntercept('reject')" class="brutalist-btn bg-red-600 border-2 border-red-800 text-white text-2xl md:text-3xl font-bold py-12 md:py-20 uppercase rounded-sm">
+                        REJECT<br><span id="reject-count" class="text-lg text-red-200 block mt-2">0</span>
+                    </button>
+                    <button onclick="logIntercept('sample')" class="brutalist-btn bg-green-600 border-2 border-green-800 text-white text-2xl md:text-3xl font-bold py-12 md:py-20 uppercase rounded-sm">
+                        SAMPLE<br><span id="sample-count" class="text-lg text-green-200 block mt-2">0</span>
+                    </button>
                 </div>
-                <div class="text-xs font-bold text-blue-500">500 VP LEFT</div>
+            </div>
+
+            <div class="bg-black p-4 border border-gray-800 rounded-sm">
+                <p class="text-xs text-gray-500 uppercase mb-2">Live Velocity Matrix</p>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Total Intercepts:</span>
+                    <span id="total-intercepts" class="font-bold">0</span>
+                </div>
+                <div class="flex justify-between text-sm mt-1">
+                    <span class="text-gray-400">Intercepts to Next Active Member:</span>
+                    <span id="velocity-target" class="font-bold neon-green">100</span>
+                </div>
             </div>
         </section>
 
-        <section class="flex-grow flex flex-col gap-3">
-            <div class="text-center mb-2">
-                <h1 class="text-sm font-bold uppercase tracking-widest text-gray-400">The 10:1 Intercept Matrix</h1>
-                <p class="text-xs text-gray-600 mt-1">Collect the "No" to unlock the "Yes"</p>
+        <section class="bg-gray-900 border-2 border-gray-700 p-6 flex flex-col">
+            <h2 class="text-xl font-bold uppercase mb-1 border-b border-gray-700 pb-2">Gate 2: Visceral AETS</h2>
+            <p class="text-xs text-gray-400 mb-6">WhatsApp API 10-Day Nutrition Education Webhooks.</p>
+
+            <div class="space-y-4 overflow-y-auto pr-2" id="crm-list">
+                <div class="bg-gray-800 border border-gray-700 p-4 rounded-sm flex justify-between items-center">
+                    <div>
+                        <p class="font-bold uppercase text-sm">Thomas (HVO)</p>
+                        <p class="text-xs text-gray-400">Status: Day 2 - Visceral Inversion</p>
+                    </div>
+                    <button onclick="fireWebhook('Thomas', 'Day 2: Villi Health & Absorption')" class="bg-white text-black text-xs font-bold px-3 py-2 uppercase hover:bg-gray-200 transition-colors rounded-sm">
+                        Fire Webhook
+                    </button>
+                </div>
+                <div class="bg-gray-800 border border-gray-700 p-4 rounded-sm flex justify-between items-center">
+                    <div>
+                        <p class="font-bold uppercase text-sm">Alicia</p>
+                        <p class="text-xs text-gray-400">Status: Day 5 - Pancreas Function</p>
+                    </div>
+                    <button onclick="fireWebhook('Alicia', 'Day 5: The Insulin Panic Attack')" class="bg-white text-black text-xs font-bold px-3 py-2 uppercase hover:bg-gray-200 transition-colors rounded-sm">
+                        Fire Webhook
+                    </button>
+                </div>
+                <div class="bg-gray-800 border border-gray-700 p-4 rounded-sm flex justify-between items-center border-l-4 border-l-neon-green">
+                    <div>
+                        <p class="font-bold uppercase text-sm">Auntie Mae</p>
+                        <p class="text-xs text-neon-green">Status: Day 21 (Gate 3 Unlocked)</p>
+                    </div>
+                    <button class="bg-gray-700 text-gray-400 text-xs font-bold px-3 py-2 uppercase cursor-not-allowed rounded-sm">
+                        Sequence Complete
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-gray-900 border-2 border-gray-700 p-6 flex flex-col justify-between">
+            <div>
+                <h2 class="text-xl font-bold uppercase mb-1 border-b border-gray-700 pb-2">Gate 3: Operator Ascension</h2>
+                <p class="text-xs text-gray-400 mb-6">Gamified 2,000 VP Progress tracking for downline.</p>
+
+                <div class="bg-black p-4 border border-gray-800 mb-6 rounded-sm">
+                    <div class="flex justify-between items-end mb-2">
+                        <span class="text-sm font-bold uppercase text-gray-300">Operator: <span class="text-white">Alicia</span></span>
+                        <span id="vp-text" class="text-lg font-bold neon-green">0 / 2,000 VP</span>
+                    </div>
+                    
+                    <div class="w-full bg-gray-800 h-6 relative overflow-hidden rounded-sm border border-gray-700">
+                        <div id="vp-bar" class="h-full bg-gray-600 progress-transition" style="width: 0%;"></div>
+                        <div class="absolute top-0 bottom-0 border-l border-dashed border-gray-400" style="left: 25%;"></div>
+                    </div>
+                    
+                    <p id="ascension-status" class="text-xs text-gray-500 uppercase mt-2 text-right">0% Discount - Retail</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="simulateVP(250)" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 text-white text-xs font-bold py-3 uppercase rounded-sm transition-colors">
+                        Add Client (+250 VP)
+                    </button>
+                    <button onclick="simulateVP(500)" class="bg-gray-800 border border-gray-700 hover:bg-gray-700 text-white text-xs font-bold py-3 uppercase rounded-sm transition-colors">
+                        Add Family Stack (+500 VP)
+                    </button>
+                </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-2 mb-2">
-                <div class="bg-gray-900 border border-gray-800 rounded-lg p-3 text-center">
-                    <div class="text-[10px] text-gray-500 uppercase font-bold mb-1">Intercepts</div>
-                    <div class="text-2xl font-black" id="stat-intercepts">0</div>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 rounded-lg p-3 text-center">
-                    <div class="text-[10px] text-gray-500 uppercase font-bold mb-1">Samples</div>
-                    <div class="text-2xl font-black text-green-500" id="stat-samples">0</div>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 rounded-lg p-3 text-center">
-                    <div class="text-[10px] text-gray-500 uppercase font-bold mb-1">Ratio</div>
-                    <div class="text-2xl font-black text-blue-500" id="stat-ratio">0:0</div>
-                </div>
-            </div>
-
-            <div class="flex-grow flex flex-col gap-4 mt-2">
-                <button onclick="logData('reject')" class="flex-grow bg-red-950 border-2 border-red-900 rounded-2xl flex flex-col items-center justify-center active:bg-red-900 transition-colors shadow-[0_0_15px_rgba(220,38,38,0.2)]">
-                    <span class="text-5xl mb-2">🛑</span>
-                    <span class="text-2xl font-black tracking-widest text-red-500">REJECTED</span>
-                    <span class="text-xs text-red-700 font-bold uppercase mt-1">Data Point Collected</span>
-                </button>
-
-                <button onclick="logData('sample')" class="flex-grow bg-green-950 border-2 border-green-800 rounded-2xl flex flex-col items-center justify-center active:bg-green-800 transition-colors shadow-[0_0_15px_rgba(22,163,74,0.2)]">
-                    <span class="text-5xl mb-2">🥤</span>
-                    <span class="text-2xl font-black tracking-widest text-green-400">SAMPLED</span>
-                    <span class="text-xs text-green-700 font-bold uppercase mt-1">Liquid Trust Deployed</span>
+            <div id="walled-garden" class="mt-6 border border-gray-800 bg-black p-4 text-center opacity-30 transition-opacity duration-500 rounded-sm">
+                <p class="text-xs uppercase text-gray-500 mb-2">M.O.E. Internal Operating System</p>
+                <button id="garden-btn" class="w-full bg-gray-800 text-gray-500 font-bold py-4 uppercase cursor-not-allowed rounded-sm">
+                    LOCKED
                 </button>
             </div>
         </section>
 
     </main>
 
+    <div id="toast" class="toast border border-gray-600">WhatsApp Webhook Fired!</div>
+
     <script>
-        // Temporary Local State (Will be connected to Vercel/Postgres DB later)
-        let intercepts = 0;
-        let samples = 0;
-        let currentVP = 1500; // Hardcoded simulation for the psychological trap
-
-        function logData(type) {
-            // Haptic Feedback for physical sensation on the street
-            if (navigator.vibrate) { navigator.vibrate(50); }
-
-            intercepts++;
-            
-            if (type === 'sample') {
-                samples++;
-                // Simulate VP growth to trigger the gamification loop
-                currentVP += 12; // Example VP for a basic starter interaction
-                if (currentVP > 2000) currentVP = 2000;
-                updateAscensionBar();
+        // DATA SCHEMA INITIALIZATION
+        const db = {
+            Users: [
+                { id: 'u1', name: 'Thomas', type: 'Clinical', vp_balance: 0, ltv: 500 },
+                { id: 'u2', name: 'Alicia', type: 'Operator', vp_balance: 0, ltv: 1200 },
+                { id: 'u3', name: 'Auntie Mae', type: 'Retail', vp_balance: 513, ltv: 3500 }
+            ],
+            DMO_Logs: {
+                location: 'KL_City_Centre',
+                rejects: 0,
+                samples: 0
+            },
+            Ascension_Ledger: {
+                alicia_vp: 0,
+                milestone_500_hit: false
             }
+        };
 
-            updateMetrics();
-        }
-
-        function updateMetrics() {
-            document.getElementById('stat-intercepts').innerText = intercepts;
-            document.getElementById('stat-samples').innerText = samples;
+        // GATE 1 LOGIC
+        function logIntercept(type) {
+            if(type === 'reject') db.DMO_Logs.rejects++;
+            if(type === 'sample') db.DMO_Logs.samples++;
             
-            // Calculate Ratio
-            let ratioText = intercepts === 0 ? "0:0" : `${(intercepts / (samples === 0 ? 1 : samples)).toFixed(1)}:1`;
-            document.getElementById('stat-ratio').innerText = ratioText;
+            let total = db.DMO_Logs.rejects + db.DMO_Logs.samples;
+            let target = 100 - (total % 100);
+            if(target === 100 && total > 0) target = 0; // Hit the 100 mark
+
+            document.getElementById('reject-count').innerText = db.DMO_Logs.rejects;
+            document.getElementById('sample-count').innerText = db.DMO_Logs.samples;
+            document.getElementById('total-intercepts').innerText = total;
+            document.getElementById('velocity-target').innerText = target;
         }
 
-        function updateAscensionBar() {
-            document.getElementById('vp-text').innerHTML = `${currentVP.toLocaleString()} <span class="text-sm text-gray-500 font-normal">/ 2,000 VP</span>`;
-            let percentage = (currentVP / 2000) * 100;
-            document.getElementById('vp-bar').style.width = `${percentage}%`;
+        // GATE 2 LOGIC
+        function fireWebhook(client, sequence) {
+            const toast = document.getElementById("toast");
+            toast.innerText = `WhatsApp API Triggered: Sending [${sequence}] to ${client}`;
+            toast.className = "toast show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
 
-            if (currentVP >= 2000) {
-                document.getElementById('vp-bar').classList.remove('bg-blue-600');
-                document.getElementById('vp-bar').classList.add('bg-green-500');
+        // GATE 3 LOGIC
+        function simulateVP(amount) {
+            let vp = db.Ascension_Ledger.alicia_vp + amount;
+            if (vp > 2000) vp = 2000;
+            db.Ascension_Ledger.alicia_vp = vp;
+
+            const bar = document.getElementById('vp-bar');
+            const text = document.getElementById('vp-text');
+            const status = document.getElementById('ascension-status');
+            const garden = document.getElementById('walled-garden');
+            const gardenBtn = document.getElementById('garden-btn');
+
+            let percentage = (vp / 2000) * 100;
+            bar.style.width = percentage + '%';
+            text.innerText = vp.toLocaleString() + ' / 2,000 VP';
+
+            // Milestone Logic
+            if (vp < 500) {
+                bar.className = "h-full bg-blue-600 progress-transition";
+                status.innerText = "25% Discount - Retail Baseline";
+            } else if (vp >= 500 && vp < 2000) {
+                if(!db.Ascension_Ledger.milestone_500_hit) {
+                    fireWebhook('Alicia', 'Congratulations! 35% Discount Unlocked.');
+                    db.Ascension_Ledger.milestone_500_hit = true;
+                }
+                bar.className = "h-full bg-purple-500 progress-transition";
+                status.innerText = "35% Unlocked - Push to 2,000 VP (Supervisor)";
+            } else if (vp === 2000) {
+                bar.className = "h-full bg-neon-green progress-transition shadow-[0_0_15px_#39ff14]";
+                status.innerText = "50% SUPERVISOR TIER UNLOCKED";
+                status.className = "text-xs font-bold text-neon-green uppercase mt-2 text-right animate-pulse";
+                
+                // Unlock Walled Garden
+                garden.className = "mt-6 border border-neon-green bg-black p-4 text-center opacity-100 transition-opacity duration-500 rounded-sm";
+                gardenBtn.className = "w-full bg-neon-green text-black font-bold py-4 uppercase cursor-pointer hover:bg-green-400 transition-colors shadow-[4px_4px_0px_0px_#fff] active:translate-y-1 active:translate-x-1 active:shadow-none rounded-sm";
+                gardenBtn.innerText = "ACCESS OPERATING SYSTEM";
+                gardenBtn.onclick = () => window.open('index.html', '_blank'); // Links back to the M.O.E. Hub
             }
         }
     </script>
